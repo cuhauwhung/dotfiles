@@ -1,9 +1,16 @@
 -- Install packer
-local fn = vim.fn
-local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-if fn.empty(fn.glob(install_path)) > 0 then
-    packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+local ensure_packer = function()
+  local fn = vim.fn
+  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+  if fn.empty(fn.glob(install_path)) > 0 then
+    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+    vim.cmd [[packadd packer.nvim]]
+    return true
+  end
+  return false
 end
+
+local packer_bootstrap = ensure_packer()
 
 require('packer').startup(function()
     use 'wbthomason/packer.nvim'
@@ -15,18 +22,56 @@ require('packer').startup(function()
         }
     }
     use 'dense-analysis/ale'
+    use 'ellisonleao/gruvbox.nvim'
+    use 'hrsh7th/cmp-nvim-lsp'
+    use 'hrsh7th/cmp-buffer'
+    use 'hrsh7th/cmp-path'
+    use 'hrsh7th/cmp-cmdline'
+    use 'hrsh7th/nvim-cmp'
+    use 'hrsh7th/vim-vsnip'
+    use 'hrsh7th/vim-vsnip-integ'
     use 'kyazdani42/nvim-tree.lua'
+    use 'kyazdani42/nvim-web-devicons'
+    use {'lewis6991/gitsigns.nvim', config=function() require('gitsigns').setup() end }
     use 'neovim/nvim-lspconfig'
     use 'nvim-lualine/lualine.nvim'
+    use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
     use 'onsails/lspkind.nvim'
     use 'SmiteshP/nvim-navic'
     use 'tpope/vim-commentary'
     use 'tpope/vim-fugitive'
     use 'tpope/vim-surround'
-    use 'williamboman/mason.nvim'
-    use 'williamboman/mason-lspconfig.nvim'
+    use { "williamboman/mason.nvim" }
+    use { "williamboman/mason-lspconfig.nvim" }
     use 'windwp/nvim-autopairs'
 end)
+
+local cmd = vim.cmd
+
+require("nvim-autopairs").setup {}
+
+require("nvim-tree").setup {
+  git = {
+      enable = true,
+      ignore = false,  -- do not hide .gitignore files
+      timeout = 400,
+  },
+}
+
+require("mason").setup()
+require('mason-lspconfig').setup({
+    ensure_installed = { 'pyright', 'clangd', 'bashls' }
+})
+
+require'nvim-treesitter.configs'.setup {
+  -- A list of parser names, or "all"
+ensure_installed = { "c", "cpp", "java", "python", "bash" },
+-- Install parsers synchronously (only applied to `ensure_installed`)
+sync_install = false,
+highlight = {
+  enable = true,    
+}
+}
 
 local lspkind = require('lspkind')
 local cmp = require('cmp')
@@ -110,20 +155,9 @@ require('lspconfig')['pyright'].setup{ on_attach = on_attach }
 require('lspconfig')['clangd'].setup{ on_attach = on_attach }
 require('lspconfig')['bashls'].setup{ on_attach = on_attach }
 
-require("nvim-autopairs").setup {}
-
-require("nvim-tree").setup {
-    git = {
-        enable = true,
-        ignore = false,  -- do not hide .gitignore files
-        timeout = 400,
-    },
-}
-
-require("mason").setup()
-require('mason-lspconfig').setup({
-    ensure_installed = { 'pyright', 'clangd', 'jdtls', 'bashls' }
-})
+local custom_fname = require('lualine.components.filename'):extend()
+local highlight = require'lualine.highlight'
+local default_status_colors = { saved = '#228B22', modified = '#C70039' }
 
 function custom_fname:init(options)
   custom_fname.super.init(self, options)

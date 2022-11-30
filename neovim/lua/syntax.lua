@@ -6,7 +6,6 @@ vim.opt.laststatus = 2
 vim.opt.compatible = false
 vim.opt.nu = true                	    -- enable line numbers
 vim.opt.rnu = true 
-vim.opt.nomodeline = true
 vim.opt.shiftwidth = 4              	-- for :retab
 vim.opt.ignorecase = true
 vim.opt.smartcase = true 	            -- ignore case for search
@@ -18,5 +17,3 @@ vim.opt.mouse='a'
 vim.opt.ttimeoutlen=0                   -- set key code delays
 vim.opt.termguicolors = true
 vim.g.indentLine_setConceal = false
-
-
