@@ -67,10 +67,7 @@ require'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all"
 ensure_installed = { "c", "cpp", "java", "python", "bash" },
 -- Install parsers synchronously (only applied to `ensure_installed`)
-sync_install = false,
-highlight = {
-  enable = true,    
-}
+sync_install = false
 }
 
 local lspkind = require('lspkind')

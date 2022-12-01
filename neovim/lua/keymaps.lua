@@ -28,6 +28,16 @@ vim.api.nvim_command([[
   au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 ]])
 
+vim.api.nvim_set_keymap("n", "<leader>1", "1gt", {})
+vim.api.nvim_set_keymap("n", "<leader>2", "2gt", {})
+vim.api.nvim_set_keymap("n", "<leader>3", "3gt", {})
+vim.api.nvim_set_keymap("n", "<leader>4", "4gt", {})
+vim.api.nvim_set_keymap("n", "<leader>5", "5gt", {})
+vim.api.nvim_set_keymap("n", "<leader>6", "6gt", {})
+vim.api.nvim_set_keymap("n", "<leader>7", "7gt", {})
+vim.api.nvim_set_keymap("n", "<leader>8", "8gt", {})
+vim.api.nvim_set_keymap("n", "<leader>9", "9gt", {})
+
 -- Search and highlight but not jump
 -- https://stackoverflow.com/a/49944815/6060420
 vim.cmd([[
