@@ -1,6 +1,6 @@
 # My dotfiles
 
 ```
-git https://github.com/cuhauwhung/dotfiles.git --recurse-submodules --remote-submodules
+git clone https://github.com/cuhauwhung/dotfiles.git --recurse-submodules 
 ./install
 ```
