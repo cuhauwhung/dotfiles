@@ -20,8 +20,8 @@ vim.api.nvim_set_keymap("n", "<c-b>", ":NvimTreeToggle<CR>", {})
 vim.api.nvim_set_keymap("n", "<c-f>", ":NvimTreeFindFile<CR>", {})
 
 -- center cursor
-vim.api.nvim_set_keymap('n', "<C-d>", "<C-d>zz")
-vim.api.nvim_set_keymap('n', "<C-u>", "<C-u>zz")
+vim.api.nvim_set_keymap('n', "<C-d>", "<C-d>zz", {})
+vim.api.nvim_set_keymap('n', "<C-u>", "<C-u>zz", {})
 
 -- remember last opened position
 vim.api.nvim_command([[
